@@ -1,0 +1,38 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{.Title}} — GOAPP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+
+  <nav>
+    <a href="/" class="nav-logo">GO<span>APP</span></a>
+    <ul>
+      <li><a href="/" class="{{if eq .CurrentPage "home"}}active{{end}}">Home</a></li>
+      <li><a href="/about" class="{{if eq .CurrentPage "about"}}active{{end}}">About</a></li>
+      <li><a href="/contact" class="{{if eq .CurrentPage "contact"}}active{{end}}">Contact</a></li>
+      <li><a href="/health" class="pill" target="_blank">Health ↗</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    {{template "content" .}}
+  </main>
+
+  <footer>
+    <span>Built with Go</span>
+    <span class="dot">·</span>
+    <span>Ready to DevOps</span>
+    <span class="dot">·</span>
+    <span class="mono">:8080</span>
+  </footer>
+</body>
+</html>
+{{end}}

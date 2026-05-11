@@ -1,0 +1,38 @@
+{{template "base" .}}
+ 
+{{define "content"}}
+<section class="page-header">
+  <div class="mono page-tag">about</div>
+  <h1>Built for the<br/><span class="accent">real world.</span></h1>
+</section>
+ 
+<section class="about-grid">
+  <div class="about-text">
+    <p>This app is a starting point — clean, structured, and ready to be hardened into production. The routing is explicit, the templates are composable, and the static file serving is separated cleanly from application logic.</p>
+    <p>No ORM. No framework magic. Just Go doing what Go does best: being fast, readable, and predictable.</p>
+  </div>
+ 
+  <div class="stack-list">
+    <h3>Stack</h3>
+    <ul>
+      <li><span class="mono">net/http</span> — routing & serving</li>
+      <li><span class="mono">html/template</span> — templating</li>
+      <li><span class="mono">log</span> — structured logging</li>
+      <li><span class="mono">go.mod</span> — zero external deps</li>
+    </ul>
+  </div>
+ 
+  <div class="roadmap">
+    <h3>DevOps Checklist</h3>
+    <ul class="checklist">
+      <li class="done">✓ Health endpoint <span class="mono">/health</span></li>
+      <li class="done">✓ Static file serving</li>
+      <li class="done">✓ Clean routing</li>
+      <li>○ Dockerfile</li>
+      <li>○ GitHub Actions workflow</li>
+      <li>○ Kubernetes manifests</li>
+      <li>○ Prometheus metrics</li>
+    </ul>
+  </div>
+</section>
+{{end}}

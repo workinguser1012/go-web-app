@@ -1,0 +1,39 @@
+{{template "base" .}}
+
+{{define "content"}}
+<section class="page-header">
+  <div class="mono page-tag">contact</div>
+  <h1>Get in<br/><span class="accent">touch.</span></h1>
+</section>
+
+<section class="contact-grid">
+  <div class="contact-info">
+    <p>Ready to extend this app? Hook up a database, add auth, or wire it into your infra. The structure is there — make it yours.</p>
+    <div class="contact-links">
+      <a href="https://github.com" class="contact-link" target="_blank">
+        <span class="mono">github</span> ↗
+      </a>
+      <a href="mailto:hello@example.com" class="contact-link">
+        <span class="mono">email</span> ↗
+      </a>
+    </div>
+  </div>
+
+  <div class="contact-form-note">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="t-dot red"></span>
+        <span class="t-dot yellow"></span>
+        <span class="t-dot green"></span>
+        <span class="t-title mono">terminal</span>
+      </div>
+      <div class="terminal-body">
+        <p><span class="t-prompt">$</span> go build -o app .</p>
+        <p><span class="t-prompt">$</span> docker build -t goapp .</p>
+        <p><span class="t-prompt">$</span> kubectl apply -f k8s/</p>
+        <p><span class="t-prompt">$</span> <span class="t-cursor">█</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+{{end}}

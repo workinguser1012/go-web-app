@@ -1,0 +1,47 @@
+{{template "base" .}}
+
+{{define "content"}}
+<section class="hero">
+  <div class="hero-tag mono">v1.0.0 — production ready</div>
+  <h1>Ship fast.<br/><span class="accent">Deploy faster.</span></h1>
+  <p class="hero-sub">A clean Go web app built for containerisation, CI/CD pipelines, and cloud deployment. Start here, ship anywhere.</p>
+  <div class="hero-actions">
+    <a href="/about" class="btn-primary">Explore →</a>
+    <a href="/health" class="btn-ghost" target="_blank">Check Health</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">~4ms</span>
+      <span class="stat-label">avg response</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">0</span>
+      <span class="stat-label">dependencies</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">scalability</span>
+    </div>
+  </div>
+</section>
+
+<section class="cards">
+  <div class="card">
+    <div class="card-icon">⚡</div>
+    <h3>Fast by default</h3>
+    <p>Pure Go standard library. No frameworks. Tiny binary. Starts in milliseconds.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon">🐳</div>
+    <h3>Container ready</h3>
+    <p>Statically compiled binary drops straight into a scratch Docker image.</p>
+  </div>
+  <div class="card">
+    <div class="card-icon">🔁</div>
+    <h3>CI/CD friendly</h3>
+    <p>Health endpoint at <span class="mono">/health</span> wired up and ready for your pipeline.</p>
+  </div>
+</section>
+{{end}}

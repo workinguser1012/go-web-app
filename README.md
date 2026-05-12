@@ -1,8 +1,8 @@
 # Go Web App
 
-A lightweight, multi-page web app built with pure Go - Containerised and deployed to Amazon EKS.
+A lightweight, multi-page web app built with pure Go — Containerised and deployed to Amazon EKS.
 
-![App Preview]()
+![App Preview](screenshot.png)
 
 ## Pages
 
@@ -33,7 +33,14 @@ go run .
 docker build -t go-web-app .
 docker run -p 8080:8080 go-web-app
 ```
+## Devopsifying the Project
 
+After Running with Docker , The Image has to be pushed to a registory
+
+```
+docker push workinguser1210/go-web-app:v1
+
+```
 ## Deployment — Amazon EKS
 
 This app is deployed to a Kubernetes cluster running on Amazon EKS.
@@ -42,13 +49,6 @@ This app is deployed to a Kubernetes cluster running on Amazon EKS.
 2. Push the Docker image to Amazon ECR
 3. Update the `image:` field in `deployment.yaml` to point to your ECR image
 4. Apply the Kubernetes manifests
-
-
-
-
-
-
-
 
 ```bash
 kubectl apply -f k8s/deployment.yaml

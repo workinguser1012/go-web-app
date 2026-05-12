@@ -1,8 +1,8 @@
 # Go Web App
 
-A lightweight, multi-page web app built with pure Go — no frameworks, no external dependencies. Built to be containerised and deployed.
+A lightweight, multi-page web app built with pure Go - Containerised and deployed to Amazon EKS.
 
-![App Preview](screenshot.png)
+![App Preview]()
 
 ## Pages
 
@@ -10,6 +10,16 @@ A lightweight, multi-page web app built with pure Go — no frameworks, no exter
 - `/about` — About
 - `/contact` — Contact
 - `/health` — Health check endpoint (returns `{"status":"ok"}`)
+
+## Prerequisites
+
+Before deploying, make sure you have the following installed and configured:
+
+- [Go 1.21+](https://golang.org/dl/)
+- [Docker](https://docs.docker.com/get-docker/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [AWS CLI](https://aws.amazon.com/cli/) — configured with `aws configure`
+- [eksctl](https://eksctl.io/) — used to create and manage the EKS cluster
 
 ## Run locally
 
@@ -24,6 +34,28 @@ docker build -t go-web-app .
 docker run -p 8080:8080 go-web-app
 ```
 
+## Deployment — Amazon EKS
+
+This app is deployed to a Kubernetes cluster running on Amazon EKS.
+
+1. Create the EKS cluster
+2. Push the Docker image to Amazon ECR
+3. Update the `image:` field in `deployment.yaml` to point to your ECR image
+4. Apply the Kubernetes manifests
+
+
+
+
+
+
+
+
+```bash
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+kubectl apply -f k8s/ingress.yaml
+```
+
 ## Project Structure
 
 ```
@@ -31,6 +63,10 @@ go-web-app/
 ├── main.go
 ├── go.mod
 ├── Dockerfile
+├── k8s/
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   └── ingress.yaml
 ├── templates/
 │   ├── base.html
 │   ├── home.html

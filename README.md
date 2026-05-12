@@ -2,8 +2,9 @@
 
 A lightweight, multi-page web app built with pure Go — Containerised and deployed to Amazon EKS.
 
-![App Preview](assets/Screenshot%202026-05-12%20200723.png)
-
+<p align="center">
+  <img src="assets/Screenshot%202026-05-12%20200723.png" width="700">
+</p>
 ## Pages
 
 - `/` — Home

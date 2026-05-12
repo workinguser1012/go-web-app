@@ -5,6 +5,7 @@ A lightweight, multi-page web app built with pure Go — Containerised and deplo
 <p align="center">
   <img src="assets/Screenshot%202026-05-12%20200723.png" width="700">
 </p>
+
 ## Pages
 
 - `/` — Home
@@ -34,6 +35,16 @@ go run .
 docker build -t go-web-app .
 docker run -p 8080:8080 go-web-app
 ```
+
+<p align="center">
+  <img src="assets/1.png" width="500">
+</p>
+
+p align="center">
+  <img src="assets/2.png" width="500">
+</p>
+
+
 ## Devopsifying the Project
 
 After Running with Docker , The Image has to be pushed to a registory

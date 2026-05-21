@@ -134,34 +134,22 @@ Take the ip adress from  the ns look up command and write it in your /etc/hosts 
 <p align="center">
   <img src="assets/Screenshot 2026-05-13 175628.png" width="500">
 </p>
-<p align="center">
-  <img src="" width="500">
-</p>
+
 <p align="center">
   <img src="assets/11.png" width="500">
 </p>
-<p align="center">
-  <img src="" width="500">
-</p>
+
 <p align="center">
   <img src="assets/Mapping.png" width="500">
 </p>
-<p align="center">
-  <img src="" width="500">
-</p>
+
 <p align="center">
   <img src="assets/Mapping it .png" width="500">
 </p>
-<p align="center">
-  <img src="" width="500">
-</p>
+
 <p align="center">
   <img src="assets/Screenshot 2026-05-14 163426.png" width="500">
 </p>
-<p align="center">
-  <img src="" width="500">
-</p>
-
 
 # Go Web App
  

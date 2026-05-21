@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: workinguser1210/go-web-app
+  pullPolicy: IfNotPresent
+  tag: "v1"
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: go-web-app.local
+      paths:
+        - path: /
+          pathType: Prefix

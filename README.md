@@ -151,7 +151,7 @@ Take the ip adress from  the ns look up command and write it in your /etc/hosts 
   <img src="assets/Screenshot 2026-05-14 163426.png" width="500">
 </p>
 
-# Go Web App
+
  
 ## Helm Deployment
  
@@ -257,3 +257,60 @@ This removes the deployment, service, and ingress all at once — no need to del
 
 
 
+## CI/CD Pipeline
+
+This project uses GitHub Actions for CI and ArgoCD for CD.
+
+### Overview
+
+<p align="center">
+  <img src="assets/cicd-pipeline.png" alt="CI/CD Pipeline Diagram" width="900">
+</p>
+
+
+
+### CI — GitHub Actions
+
+The CI pipeline is defined in `.github/workflows/ci.yml` and runs automatically on every push to `main`.
+
+#### Stage 1 — Build and Test
+
+Checks out the code, sets up Go, and runs unit tests to make sure nothing is broken before anything gets built or deployed.
+
+
+#### Stage 2 — Docker Build and Push
+
+Builds a new Docker image and pushes it to Docker Hub using the GitHub Actions run ID as the image tag, so every push produces a unique version.
+
+
+#### Stage 3 — Update Helm
+
+Updates the image tag in `values.yaml` with the new tag from Stage 2 and commits that change back to the repository. This is what triggers the CD stage.
+
+
+
+---
+
+<p align="center">
+  <img src="assets/Screenshot 2026-05-23 181922.png" alt="CI/CD Pipeline Diagram" width="900">
+</p>
+
+
+### CD — ArgoCD
+
+ArgoCD runs inside the EKS cluster and watches the Helm chart in this repository. When it detects a change to `values.yaml` it automatically pulls the updated chart and deploys it to the cluster.
+
+- If the app is not yet deployed — ArgoCD runs `helm install`
+- If the app is already running — ArgoCD runs `helm upgrade` with zero downtime
+
+This means the only thing needed to deploy a new version is pushing code. ArgoCD handles everything from there automatically.
+
+---
+
+### Secrets Required
+
+Before the pipeline will run, add these secrets to your GitHub repository
+
+`DOCKERHUB_USERNAME`  Your Docker Hub username 
+`DOCKERHUB_TOKEN`  Docker Hub access token 
+`TOKEN`  GitHub personal access token for committing back to the repo 

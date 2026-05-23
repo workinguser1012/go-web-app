@@ -1,0 +1,65 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'go-web-app-chart/**'
+      - 'k8s/**'
+      - 'README.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.21
+
+    - name: Build
+      run: go build -o go-web-app
+
+    - name: Test
+      run: go test ./...
+
+  push:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and Push
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-web-app:${{ github.run_id }}
+
+  update-helm:
+    runs-on: ubuntu-latest
+    needs: push
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.TOKEN }}
+
+    - name: Update image tag
+      run: sed -i 's/tag: .*/tag: "${{ github.run_id }}"/' go-web-app-chart/values.yaml
+
+    - name: Commit and push
+      run: |
+        git config --global user.email "rageworking1210@gmail.com"
+        git config --global user.name "workinguser1012"
+        git add go-web-app-chart/values.yaml
+        git commit -m "Update image tag to ${{ github.run_id }}"
+        git push

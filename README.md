@@ -176,10 +176,7 @@ rm -rf go-web-app-chart/templates/*
 ```
 
 <p align="center">
-  <img src="assets/assets/Screenshot 2026-05-14 180128.png width="500">
-</p>
-<p align="center">
-  <img src="" width="500">
+  <img src="assets/Screenshot 2026-05-14 180128.png" width="500">
 </p>
  
 ### 3. Copy Manifests into the Chart
@@ -191,34 +188,27 @@ cp -i k8s/manifests/deployment.yaml go-web-app-chart/templates/
 cp -i k8s/manifests/service.yaml go-web-app-chart/templates/
 cp -i k8s/manifests/ingress.yaml go-web-app-chart/templates/
 ```
-<p align="center">
-  <img src="assets/Screenshot 2026-05-14 180206.png">
-</p>
-<p align="center">
-  <img src="" width="500">
-</p>
  
+<p align="center">
+  <img src="assets/Screenshot 2026-05-14 180206.png" width="500">
+</p>
+
 ### 4. Configure the Chart
  
-I updated the YAML files inside `templates/` so they reference values from each other, and deleted the default `values.yaml` so the templates use their own hardcoded values directly. ()
+I updated the YAML files inside `templates/` so they reference values from each other, and deleted the default `values.yaml` so the templates use their own hardcoded values directly.
  
- <p align="center">
-  <img src="assets/Helm Yaml.png">
+<p align="center">
+  <img src="assets/Helm Yaml.png" width="500">
 </p>
 <p align="center">
-  <img src="" width="500">
-</p>
-<p align="center">
-  <img src="assets/service yaml.png">
+  <img src="assets/service yaml.png" width="500">
 </p>
 <p align="center">
   <img src="assets/Ingress YAM;L.png" width="500">
 </p>
-</p>
 <p align="center">
   <img src="assets/values yaml.png" width="500">
 </p>
-
 ### 5. Delete Existing Resources
  
 Before installing via Helm I cleaned up the manually applied resources:
@@ -228,10 +218,10 @@ kubectl delete deploy go-web-app
 kubectl delete svc go-web-app
 kubectl delete ing go-web-app
 ```
+ 
 <p align="center">
   <img src="assets/Screenshot 2026-05-14 183220.png" width="500">
 </p>
-
 ### 6. Install with Helm
  
 I then installed the app through Helm from the project root:
@@ -247,10 +237,10 @@ Verify everything is running:
 helm list
 kubectl get all
 ```
- <p align="center">
+ 
+<p align="center">
   <img src="assets/Screenshot 2026-05-14 183419.png" width="500">
 </p>
-
 ### 7. Uninstall
  
 To tear down the entire release in one command:
@@ -260,11 +250,10 @@ helm uninstall go-web-app
 ```
  
 This removes the deployment, service, and ingress all at once — no need to delete each resource manually like before.
-
+ 
 <p align="center">
   <img src="assets/helm delete all.png" width="500">
 </p>
-
 
 
 

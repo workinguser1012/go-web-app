@@ -54,7 +54,8 @@ jobs:
         token: ${{ secrets.TOKEN }}
 
     - name: Update image tag
-      run: sed -i 's/tag: .*/tag: "${{ github.run_id }}"/' go-web-app-chart/values.yaml
+      run: |
+        sed -i 's/tag: .*/tag: "${{ github.run_id }}"/' go-web-app-chart/values.yaml
 
     - name: Commit and push
       run: |

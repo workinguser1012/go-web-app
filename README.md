@@ -22,7 +22,12 @@ Before deploying, make sure you have the following installed and configured:
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [AWS CLI](https://aws.amazon.com/cli/) — configured with `aws configure`
 - [eksctl](https://eksctl.io/) — used to create and manage the EKS cluster
+- [Helm](https://helm.sh/docs/intro/install/) — used to package and deploy the application
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) — used for continuous delivery to EKS
+-  [Docker Hub](https://hub.docker.com/) account — to push and store Docker images
+-  [GitHub](https://github.com/) account — for source control and GitHub Actions CI pipeline
 
+( Dont panick I will show you when each is needed and how to download it,its very simple.)
 ## Project Structure
 
 ```
@@ -209,6 +214,7 @@ I updated the YAML files inside `templates/` so they reference values from each 
 <p align="center">
   <img src="assets/values yaml.png" width="500">
 </p>
+
 ### 5. Delete Existing Resources
  
 Before installing via Helm I cleaned up the manually applied resources:
@@ -222,6 +228,7 @@ kubectl delete ing go-web-app
 <p align="center">
   <img src="assets/Screenshot 2026-05-14 183220.png" width="500">
 </p>
+
 ### 6. Install with Helm
  
 I then installed the app through Helm from the project root:
@@ -264,7 +271,7 @@ This project uses GitHub Actions for CI and ArgoCD for CD.
 ### Overview
 
 <p align="center">
-  <img src="assets/cicd-pipeline.png" alt="CI/CD Pipeline Diagram" width="900">
+  <img src="assets/cicd-pipeline.png" alt="CI/CD Pipeline Diagram" width="700">
 </p>
 
 
@@ -292,7 +299,7 @@ Updates the image tag in `values.yaml` with the new tag from Stage 2 and commits
 ---
 
 <p align="center">
-  <img src="assets/Screenshot 2026-05-23 181922.png" alt="CI/CD Pipeline Diagram" width="900">
+  <img src="assets/Screenshot 2026-05-23 181922.png" alt="CI/CD Pipeline Diagram" width="500">
 </p>
 
 
@@ -312,5 +319,7 @@ This means the only thing needed to deploy a new version is pushing code. ArgoCD
 Before the pipeline will run, add these secrets to your GitHub repository
 
 `DOCKERHUB_USERNAME`  Your Docker Hub username 
+
 `DOCKERHUB_TOKEN`  Docker Hub access token 
+
 `TOKEN`  GitHub personal access token for committing back to the repo 

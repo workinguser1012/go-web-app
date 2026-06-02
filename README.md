@@ -280,6 +280,17 @@ This project uses GitHub Actions for CI and ArgoCD for CD.
 
 The CI pipeline is defined in `.github/workflows/ci.yml` and runs automatically on every push to `main`.
 
+
+## Secrets Required
+
+Before the pipeline will run, add these secrets to your GitHub repository
+
+`DOCKERHUB_USERNAME`  Your Docker Hub username 
+
+`DOCKERHUB_TOKEN`  Docker Hub access token 
+
+`TOKEN`  GitHub personal access token for committing back to the repo 
+
 #### Stage 1 — Build and Test
 
 Checks out the code, sets up Go, and runs unit tests to make sure nothing is broken before anything gets built or deployed.
@@ -305,21 +316,77 @@ Updates the image tag in `values.yaml` with the new tag from Stage 2 and commits
 
 ### CD — ArgoCD
 
-ArgoCD runs inside the EKS cluster and watches the Helm chart in this repository. When it detects a change to `values.yaml` it automatically pulls the updated chart and deploys it to the cluster.
+ArgoCD runs inside the EKS cluster and watches the Helm chart When it detects a change to `values.yaml` it automatically pulls the updated chart and deploys it to the cluster.
 
-- If the app is not yet deployed — ArgoCD runs `helm install`
-- If the app is already running — ArgoCD runs `helm upgrade` with zero downtime
 
-This means the only thing needed to deploy a new version is pushing code. ArgoCD handles everything from there automatically.
+## Install 
+Steps on how to install argocd ,access the ui through a loadbalancer 
+```bash
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get svc argocd-server -n argocd
+```
+When Accessing argocd ,username is admin and password can be found by running "kubectl edit secret argocd-initial-admin-secret -n argocd" and then copying the password into this command "echo password | base64 --decode"( replace password with your password).
 
----
+<p align="center">
+  <img src="assets/ac2p.png" alt="CI/CD Pipeline Diagram" width="500">
+</p>
 
-### Secrets Required
 
-Before the pipeline will run, add these secrets to your GitHub repository
+## Implementation
 
-`DOCKERHUB_USERNAME`  Your Docker Hub username 
+<p align="center">
+  <img src="assets/ac1p.png" width="500">
+</p>
+<p align="center">
+  <img src="assets/patch.png" width="500">
+</p>
+<p align="center">
+  <img src="assets/Screenshot 2026-06-01 180702.png" width="500">
+</p>
 
-`DOCKERHUB_TOKEN`  Docker Hub access token 
 
-`TOKEN`  GitHub personal access token for committing back to the repo 
+## Final Demo
+ 
+To see the full CI/CD pipeline in action, make a change to `templates/home.html` and push it to main.
+ 
+```bash
+git add .
+git commit -m "Update home page"
+git push origin main
+```
+ 
+This single push triggers the entire pipeline automatically:
+ 
+1. **GitHub Actions kicks off** — runs the build and test stage to make sure nothing is broken
+
+<p align="center">
+  <img src="assets/111.png" width="500">
+</p>
+<p align="center">
+  <img src="assets/113.png" width="500">
+</p>
+
+
+2. **Docker image is built and pushed** to Docker Hub with a new unique tag
+
+<p align="center">
+  <img src="assets/112.png" width="500">
+</p>
+
+3. **values.yaml is updated** with the new image tag and committed back to the repo
+
+<p align="center">
+  <img src="assets/114.png" width="500">
+</p>
+
+4. **ArgoCD detects the change** in the Helm chart and automatically deploys the new version to EKS
+You never touch the cluster — by the time you check the ArgoCD UI the new version is already live.
+
+<p align="center">
+  <img src="assets/115.png" width="500">
+</p>
+<p align="center">
+  <img src="assets/116.png" width="500">
+</p>

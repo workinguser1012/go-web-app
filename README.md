@@ -6,6 +6,18 @@ A lightweight, multi-page web app I built with pure Go — Containerised and dep
   <img src="assets/Screenshot%202026-05-12%20200723.png" width="700">
 </p>
 
+
+## How It Works ( Final Structure)
+ 
+I built a multi-page web app in Go with four pages — home, about, contact, and a health check endpoint. It's containerised with Docker and the image is stored on Docker Hub. The app runs on Amazon EKS with two t3.small nodes created using eksctl, exposed publicly through an AWS Elastic Load Balancer.
+ 
+When I push code to main, GitHub Actions picks up the pipeline from `.github/workflows/ci.yml` and runs automatically. First it runs `go test ./...` to make sure nothing is broken — if tests fail everything stops there. If they pass it builds a fresh Docker image and pushes it to Docker Hub with a unique tag using the GitHub run ID. Once that's done it updates the image tag in `go-web-app-chart/values.yaml` and commits that change back to the repo.
+ 
+Rather than managing raw Kubernetes files manually, everything is packaged into a Helm chart. The `templates/` folder contains the deployment, service, and ingress files and `values.yaml` is the only thing that changes between deployments — just the image tag.
+ 
+ArgoCD runs inside the EKS cluster watching the repo. The moment it sees `values.yaml` change it pulls the updated Helm chart and deploys it automatically. First time it runs `helm install`, after that every update is a `helm upgrade` with zero downtime. The cluster is never touched manually.
+ 
+
 ## Pages
 
 - `/` — Home
@@ -31,21 +43,36 @@ Before deploying, make sure you have the following installed and configured:
 ## Project Structure
 
 ```
-go-web-app/
-├── main.go
-├── go.mod
+.
 ├── Dockerfile
-├── k8s/
-│   ├── deployment.yaml
-│   ├── service.yaml
-│   └── ingress.yaml
-├── templates/
-│   ├── base.html
-│   ├── home.html
-│   ├── about.html
-│   └── contact.html
-└── static/
-    └── style.css
+├── README.md
+├── assets/
+├── deployment.yaml
+├── go-web-app-chart
+│   ├── Chart.yaml
+│   ├── charts/
+│   ├── templates
+│   │   ├── deployment.yaml
+│   │   ├── ingress.yaml
+│   │   └── service.yaml
+│   └── values.yaml
+├── go.mod
+├── k8s
+│   └── manifests
+│       ├── deployment.yaml
+│       ├── ingress.yaml
+│       └── service.yaml
+├── main
+├── main.go
+├── static
+│   └── style.css
+└── templates
+    ├── about.html
+    ├── base.html
+    ├── contact.html
+    └── home.html
+
+
 ```
 
 ## Run locally
@@ -248,6 +275,7 @@ kubectl get all
 <p align="center">
   <img src="assets/Screenshot 2026-05-14 183419.png" width="500">
 </p>
+
 ### 7. Uninstall
  
 To tear down the entire release in one command:

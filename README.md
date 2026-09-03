@@ -299,7 +299,7 @@ This project uses GitHub Actions for CI and ArgoCD for CD.
 ### Overview
 
 <p align="center">
-  <img src="assets/cicd-pipeline.png" alt="CI/CD Pipeline Diagram" width="700">
+  <img src="assets/cicd-pipeline.png" alt="CI/CD Pipeline Diagram" width="400">
 </p>
 
 
